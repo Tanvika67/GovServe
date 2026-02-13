@@ -11,7 +11,8 @@ namespace GovServe.Models
 		[Required]
 		public int AssignedOfficerId {  get; set; }
         public DateTime AssignedDate { get; set; }
-        public string Status { get; set; }
+		public DateTime LastUpdated { get; set; }
+		public string Status { get; set; }
         
         
          
