@@ -15,5 +15,6 @@ namespace GovServe.Data
         }
 
         public DbSet<GovServe.Models.Notification> Notification { get; set; } = default!;
+        public DbSet<GovServe.Models.Department> Department { get; set; } = default!;
     }
 }
