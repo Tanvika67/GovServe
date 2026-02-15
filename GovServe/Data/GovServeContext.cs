@@ -16,5 +16,9 @@ namespace GovServe.Data
 
         public DbSet<GovServe.Models.Notification> Notification { get; set; } = default!;
         public DbSet<GovServe.Models.Department> Department { get; set; } = default!;
+        public DbSet<GovServe.Models.Registration> Registration { get; set; } = default!;
+        public DbSet<GovServe.Models.Login> Login { get; set; } = default!;
+        public DbSet<GovServe.Models.Applications> Applications { get; set; } = default!;
+        public DbSet<GovServe.Models.CitizenDocument> CitizenDocument { get; set; } = default!;
     }
 }
