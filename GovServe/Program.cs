@@ -5,7 +5,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddDbContext<GovServeContext>(options =>
+	options.UseSqlServer(builder.Configuration.GetConnectionString("GovServeContext") ?? throw new InvalidOperationException("Connection string 'GovServeContext' not found.")));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

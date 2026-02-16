@@ -12,11 +12,17 @@ namespace GovServe.Models
 		[Required]
 		[ForeignKey("Case")]
 		public int CaseId {  get; set; }
-		// public virtual Cases CaseId { get; set; }
-		public int? RaisedByUserId { get; set; }
+		public virtual Cases CaseId { get; set; }
+		[Required]
+		[RegularExpression("Citizen|System",ErrorMessage ="RaisedByType must be Citizen or System")]
+		public int? RaisedByType { get; set; }
+		[Required]
+		[StringLength(200,MinimumLength =5)]
 		public string Reason { get; set; }
-
+		[Required]
+		[RegularExpression("pending|Resolved|",ErrorMessage ="Status must be Pending or Resolved")]
 		public string Status { get; set; }
+		[Required]
 		public DateTime CreatedDate { get; set; }
 
 	}
