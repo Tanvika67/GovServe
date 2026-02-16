@@ -11,7 +11,7 @@ namespace GovServe.Models
         public string Message { get; set; }
         public string Category {  get; set; }
 		public string Status{ get; set; }
-		public DateOnly CreatedDate { get; set; }
+		public DateTime CreatedDate { get; set; }
 
     }
 }
