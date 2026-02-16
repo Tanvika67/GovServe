@@ -5,6 +5,8 @@ namespace GovServe.Models
     public class Department
     {
         [Key]
+
+
         public int DepartmentID { get; set; }
 
         [Required,StringLength(100)]

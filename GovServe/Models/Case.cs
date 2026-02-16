@@ -9,7 +9,9 @@ namespace GovServe.Models
         public int CaseId {  get; set; }   //Primary key
         [ForeignKey("Application")]
         public int ApplicationId{ get; set; } //FK from Application Table
-		//public Application Application { get; set; }
+
+		public virtual Applications Application { get; set; }
+
 		[Required]
 		public int AssignedOfficerId {  get; set; }
 		public string Status { get; set; }

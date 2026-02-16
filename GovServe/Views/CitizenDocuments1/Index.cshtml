@@ -1,0 +1,59 @@
+﻿@model IEnumerable<GovServe.Models.CitizenDocument>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Application)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DocumentType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FilePath)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UploadedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VerificationStatus)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Application.ApplicationID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DocumentType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FilePath)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UploadedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VerificationStatus)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.CitizenDocumentID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.CitizenDocumentID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.CitizenDocumentID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

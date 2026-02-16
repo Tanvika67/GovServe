@@ -19,10 +19,13 @@ namespace GovServe.Controllers
             _context = context;
         }
 
-        // GET: Cases
+        // GET: Cases It will show the status
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Case.ToListAsync());
+            var activeCases = await _context.Case
+                .Where(c => c.Status == "Pending").ToListAsync();
+
+            return View(activeCases);
         }
 
         // GET: Cases/Details/5
@@ -33,18 +36,21 @@ namespace GovServe.Controllers
                 return NotFound();
             }
 
-            var @case = await _context.Case
+            var caseData = await _context.Case
                 .FirstOrDefaultAsync(m => m.CaseId == id);
-            if (@case == null)
+            if (caseData == null)
             {
                 return NotFound();
             }
 
-            return View(@case);
+            return View(caseData);
         }
+    }
+
+}
 
         // GET: Cases/Create
-        public IActionResult Create()
+       /* public IActionResult Create()
         {
             return View();
         }
@@ -154,4 +160,4 @@ namespace GovServe.Controllers
             return _context.Case.Any(e => e.CaseId == id);
         }
     }
-}
+}*/
