@@ -2,8 +2,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using GovServe.Data;
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddDbContext<GovServeContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("GovServeContext") ?? throw new InvalidOperationException("Connection string 'GovServeContext' not found.")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
