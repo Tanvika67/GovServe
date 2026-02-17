@@ -13,7 +13,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ApplicationId)
+                @Html.DisplayNameFor(model => model.Application)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.AssignedOfficerId)
@@ -22,13 +22,13 @@
                 @Html.DisplayNameFor(model => model.Status)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CurrentStage)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.AssignedDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.LastUpdated)
+                @Html.DisplayNameFor(model => model.CreatedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SLADeadline)
             </th>
             <th></th>
         </tr>
@@ -37,7 +37,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.ApplicationId)
+                @Html.DisplayFor(modelItem => item.Application.ApplicationID)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.AssignedOfficerId)
@@ -46,13 +46,13 @@
                 @Html.DisplayFor(modelItem => item.Status)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CurrentStage)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.AssignedDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.LastUpdated)
+                @Html.DisplayFor(modelItem => item.CreatedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SLADeadline)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.CaseId">Edit</a> |

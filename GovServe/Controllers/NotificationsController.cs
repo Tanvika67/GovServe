@@ -41,6 +41,7 @@ namespace GovServe.Controllers
             }
 
             return View(notification);
+
         }
 
         // GET: Notifications/Create

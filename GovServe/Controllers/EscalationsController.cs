@@ -19,13 +19,13 @@ namespace GovServe.Controllers
             _context = context;
         }
 
-        // GET: Escalations
+        // GET: Escalations1
         public async Task<IActionResult> Index()
         {
             return View(await _context.Escalation.ToListAsync());
         }
 
-        // GET: Escalations/Details/5
+        // GET: Escalations1/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -43,18 +43,18 @@ namespace GovServe.Controllers
             return View(escalation);
         }
 
-        // GET: Escalations/Create
+        // GET: Escalations1/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Escalations/Create
+        // POST: Escalations1/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EscalationId,CaseId,RaisedByUserId,Reason,Status,CreatedDate")] Escalation escalation)
+        public async Task<IActionResult> Create([Bind("EscalationId,CaseId,RaisedByType,Reason,Status,CreatedDate")] Escalation escalation)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +65,7 @@ namespace GovServe.Controllers
             return View(escalation);
         }
 
-        // GET: Escalations/Edit/5
+        // GET: Escalations1/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -81,12 +81,12 @@ namespace GovServe.Controllers
             return View(escalation);
         }
 
-        // POST: Escalations/Edit/5
+        // POST: Escalations1/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EscalationId,CaseId,RaisedByUserId,Reason,Status,CreatedDate")] Escalation escalation)
+        public async Task<IActionResult> Edit(int id, [Bind("EscalationId,CaseId,RaisedByType,Reason,Status,CreatedDate")] Escalation escalation)
         {
             if (id != escalation.EscalationId)
             {
@@ -116,7 +116,7 @@ namespace GovServe.Controllers
             return View(escalation);
         }
 
-        // GET: Escalations/Delete/5
+        // GET: Escalations1/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -134,7 +134,7 @@ namespace GovServe.Controllers
             return View(escalation);
         }
 
-        // POST: Escalations/Delete/5
+        // POST: Escalations1/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

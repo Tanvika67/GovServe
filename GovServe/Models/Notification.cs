@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GovServe.Models
 {
@@ -6,11 +7,20 @@ namespace GovServe.Models
     {
         [Key]
         public int NotificationId { get; set; }
-
-        public int  UserId { get; set; }
-        public string Message { get; set; }
+		[Required]
+		[ForeignKey("User")]
+		public int  UserId { get; set; }
+	//	public virtual Users UserId { get; set; }    // ==>why error
+		[Required]
+		[StringLength(150)]
+		public string Message { get; set; }
+		[Required]
+		[RegularExpression("Info|Warning|Alert")]
         public string Category {  get; set; }
+		[Required]
+		[RegularExpression("Read|Unread")]
 		public string Status{ get; set; }
+		[Required]
 		public DateTime CreatedDate { get; set; }
 
     }

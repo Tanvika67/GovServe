@@ -19,14 +19,12 @@ namespace GovServe.Controllers
             _context = context;
         }
 
-        // GET: Cases It will show the status
-        public async Task<IActionResult> Index()
-        {
-            var activeCases = await _context.Case
-                .Where(c => c.Status == "Pending").ToListAsync();
-
-            return View(activeCases);
-        }
+        // GET: Cases
+        //public async Task<IActionResult> Index()
+        //{
+        // //   var govServeContext = _context.Case.Include(@ => @.Application);
+        // //   return View(await govServeContext.ToListAsync());
+        //}
 
         // GET: Cases/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -36,22 +34,21 @@ namespace GovServe.Controllers
                 return NotFound();
             }
 
-            var caseData = await _context.Case
+            var @case = await _context.Case
+            //    .Include(@ => @.Application)
                 .FirstOrDefaultAsync(m => m.CaseId == id);
-            if (caseData == null)
+            if (@case == null)
             {
                 return NotFound();
             }
 
-            return View(caseData);
+            return View(@case);
         }
-    }
-
-}
 
         // GET: Cases/Create
-       /* public IActionResult Create()
+        public IActionResult Create()
         {
+            ViewData["ApplicationId"] = new SelectList(_context.Applications, "ApplicationID", "ApplicationID");
             return View();
         }
 
@@ -60,7 +57,7 @@ namespace GovServe.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CaseId,ApplicationId,AssignedOfficerId,Status,CurrentStage,AssignedDate,LastUpdated")] Case @case)
+        public async Task<IActionResult> Create([Bind("CaseId,ApplicationId,AssignedOfficerId,Status,AssignedDate,CreatedDate,SLADeadline")] Case @case)
         {
             if (ModelState.IsValid)
             {
@@ -68,6 +65,7 @@ namespace GovServe.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["ApplicationId"] = new SelectList(_context.Applications, "ApplicationID", "ApplicationID", @case.ApplicationId);
             return View(@case);
         }
 
@@ -84,6 +82,7 @@ namespace GovServe.Controllers
             {
                 return NotFound();
             }
+            ViewData["ApplicationId"] = new SelectList(_context.Applications, "ApplicationID", "ApplicationID", @case.ApplicationId);
             return View(@case);
         }
 
@@ -92,7 +91,7 @@ namespace GovServe.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CaseId,ApplicationId,AssignedOfficerId,Status,CurrentStage,AssignedDate,LastUpdated")] Case @case)
+        public async Task<IActionResult> Edit(int id, [Bind("CaseId,ApplicationId,AssignedOfficerId,Status,AssignedDate,CreatedDate,SLADeadline")] Case @case)
         {
             if (id != @case.CaseId)
             {
@@ -119,6 +118,7 @@ namespace GovServe.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["ApplicationId"] = new SelectList(_context.Applications, "ApplicationID", "ApplicationID", @case.ApplicationId);
             return View(@case);
         }
 
@@ -131,6 +131,7 @@ namespace GovServe.Controllers
             }
 
             var @case = await _context.Case
+             //   .Include(@ => @.Application)
                 .FirstOrDefaultAsync(m => m.CaseId == id);
             if (@case == null)
             {
@@ -160,4 +161,4 @@ namespace GovServe.Controllers
             return _context.Case.Any(e => e.CaseId == id);
         }
     }
-}*/
+}
