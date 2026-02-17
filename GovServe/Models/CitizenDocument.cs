@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace GovServe.Models
 {
@@ -9,14 +10,16 @@ namespace GovServe.Models
 		[Key]
 		public int CitizenDocumentID { get; set; }
 
-		[Required]
+		
 		public int ApplicationID { get; set; }
 		[ForeignKey("ApplicationID")]
+		[ValidateNever]
 		public virtual Applications Application { get; set; }
 
-		//[Required]
-		//public int DocumentID { get; set; }
+	
+		public int DocumentID { get; set; }
 		//[ForeignKey("DocumentID")]
+		//[ValidateNever]
 		//public virtual RequiredDocument Required { get; set; }
 
 		[Required, MaxLength(100)]
@@ -28,7 +31,9 @@ namespace GovServe.Models
 		[Required]
 		public DateTime UploadedDate { get; set; }
 
-		[Required, MaxLength(50)]
+		[Required]
+		[RegularExpression("Submitted|Under Review|Approved|Rejected",
+	ErrorMessage = "Status must be Submitted, Under Review, Approved or Rejected")]
 		public string VerificationStatus { get; set; }
 	}
 }

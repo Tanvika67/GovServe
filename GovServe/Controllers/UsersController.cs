@@ -10,22 +10,22 @@ using GovServe.Models;
 
 namespace GovServe.Controllers
 {
-    public class EscalationsController : Controller
+    public class UsersController : Controller
     {
         private readonly GovServeContext _context;
 
-        public EscalationsController(GovServeContext context)
+        public UsersController(GovServeContext context)
         {
             _context = context;
         }
 
-        // GET: Escalations
+        // GET: Users
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Escalation.ToListAsync());
+            return View(await _context.User.ToListAsync());
         }
 
-        // GET: Escalations/Details/5
+        // GET: Users/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,79 @@ namespace GovServe.Controllers
                 return NotFound();
             }
 
-            var escalation = await _context.Escalation
-                .FirstOrDefaultAsync(m => m.EscalationId == id);
-            if (escalation == null)
+            var user = await _context.User
+                .FirstOrDefaultAsync(m => m.UserId == id);
+            if (user == null)
             {
                 return NotFound();
             }
 
-            return View(escalation);
+            return View(user);
         }
 
-        // GET: Escalations/Create
+        // GET: Users/Create
         public IActionResult Create()
         {
-            return View();
+			var roles = new List<string>
+		 {
+			 "Citizen",
+			 "Officer",
+			 "Supervisory Officer",
+			 "Greviance Officer",
+			 "Admin"
+		 };
+			return View();
         }
 
-        // POST: Escalations/Create
+        // POST: Users/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EscalationId,CaseId,RaisedByUserId,Reason,Status,CreatedDate")] Escalation escalation)
+        public async Task<IActionResult> Create([Bind("UserId,FullName,Email,Phone,Password,ConfirmPassword,Role")] User user)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(escalation);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(escalation);
-        }
+			if (ModelState.IsValid)
+			{
+				// Check Email Already Exists
+				var emailExists = await _context.User
+					.AnyAsync(x => x.Email.ToLower() == user.Email.ToLower());
 
-        // GET: Escalations/Edit/5
+				if (emailExists)
+				{
+					ModelState.AddModelError("Email", "This Email is already registered.");
+					return View(user);
+				}
+
+				// Check Phone Already Exists
+				var phoneExists = await _context.User
+					.AnyAsync(x => x.Phone == user.Phone);
+
+				if (phoneExists)
+				{
+					ModelState.AddModelError("Phone", "This Phone Number is already registered.");
+					return View(user);
+				}
+				var roles = new List<string>
+			 {
+				  "Citizen",
+				  "Officer",
+				  "Supervisory Officer",
+				  "Greviance Officer",
+				  "Admin"
+			 };
+				ViewBag.Roles = new SelectList(roles);
+
+				// Save User
+				_context.Add(user);
+				await _context.SaveChangesAsync();
+
+				return RedirectToAction(nameof(Index));
+			}
+
+			return View(user);
+		}
+
+        // GET: Users/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +113,22 @@ namespace GovServe.Controllers
                 return NotFound();
             }
 
-            var escalation = await _context.Escalation.FindAsync(id);
-            if (escalation == null)
+            var user = await _context.User.FindAsync(id);
+            if (user == null)
             {
                 return NotFound();
             }
-            return View(escalation);
+            return View(user);
         }
 
-        // POST: Escalations/Edit/5
+        // POST: Users/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EscalationId,CaseId,RaisedByUserId,Reason,Status,CreatedDate")] Escalation escalation)
+        public async Task<IActionResult> Edit(int id, [Bind("UserId,FullName,Email,Phone,Password,ConfirmPassword,Role")] User user)
         {
-            if (id != escalation.EscalationId)
+            if (id != user.UserId)
             {
                 return NotFound();
             }
@@ -97,12 +137,12 @@ namespace GovServe.Controllers
             {
                 try
                 {
-                    _context.Update(escalation);
+                    _context.Update(user);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EscalationExists(escalation.EscalationId))
+                    if (!UserExists(user.UserId))
                     {
                         return NotFound();
                     }
@@ -113,10 +153,10 @@ namespace GovServe.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(escalation);
+            return View(user);
         }
 
-        // GET: Escalations/Delete/5
+        // GET: Users/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,34 +164,34 @@ namespace GovServe.Controllers
                 return NotFound();
             }
 
-            var escalation = await _context.Escalation
-                .FirstOrDefaultAsync(m => m.EscalationId == id);
-            if (escalation == null)
+            var user = await _context.User
+                .FirstOrDefaultAsync(m => m.UserId == id);
+            if (user == null)
             {
                 return NotFound();
             }
 
-            return View(escalation);
+            return View(user);
         }
 
-        // POST: Escalations/Delete/5
+        // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var escalation = await _context.Escalation.FindAsync(id);
-            if (escalation != null)
+            var user = await _context.User.FindAsync(id);
+            if (user != null)
             {
-                _context.Escalation.Remove(escalation);
+                _context.User.Remove(user);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool EscalationExists(int id)
+        private bool UserExists(int id)
         {
-            return _context.Escalation.Any(e => e.EscalationId == id);
+            return _context.User.Any(e => e.UserId == id);
         }
     }
 }

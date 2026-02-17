@@ -1,4 +1,4 @@
-﻿@model GovServe.Models.Login
+﻿@model GovServe.Models.User
 
 @{
     ViewData["Title"] = "Create";
@@ -6,16 +6,26 @@
 
 <h1>Create</h1>
 
-<h4>Login</h4>
+<h4>User</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
+                <label asp-for="FullName" class="control-label"></label>
+                <input asp-for="FullName" class="form-control" />
+                <span asp-validation-for="FullName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Email" class="control-label"></label>
                 <input asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Phone" class="control-label"></label>
+                <input asp-for="Phone" class="form-control" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Password" class="control-label"></label>
@@ -29,14 +39,14 @@
             </div>
             <div class="form-group">
                 <label asp-for="Role" class="control-label"></label>
-               <select asp-for="Role" class="from-control" asp-items="ViewBag.Roles">
+                <select asp-for="Role" class="from-control" asp-items="ViewBag.Roles">
                     <option value="">Select Role</option>
                     <option value="Citizen">Citizen</option>
                     <option value="Officer">Officer</option>
                     <option value="Supervisory Officer">Supervisory Officer</option>
                     <option value="Greviance Officer">Greviance Officer</option>
                     <option value="Admin">Admin</option>
-               </select>
+                </select>
                 <span asp-validation-for="Role" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -48,8 +58,8 @@
 
 <div>
     <a asp-action="Index">Back to List</a>
-    <a asp-action="ForgotPassword" class="btn btn-link"> Forgot Password? </a>
 </div>
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

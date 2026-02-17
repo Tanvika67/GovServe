@@ -10,22 +10,22 @@ using GovServe.Models;
 
 namespace GovServe.Controllers
 {
-    public class DepartmentsController : Controller
+    public class CitizenDocumentsController : Controller
     {
         private readonly GovServeContext _context;
 
-        public DepartmentsController(GovServeContext context)
+        public CitizenDocumentsController(GovServeContext context)
         {
             _context = context;
         }
 
-        // GET: Departments
+        // GET: CitizenDocuments
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Department.ToListAsync());
+            return View(await _context.CitizenDocument.ToListAsync());
         }
 
-        // GET: Departments/Details/5
+        // GET: CitizenDocuments/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace GovServe.Controllers
                 return NotFound();
             }
 
-            var department = await _context.Department
-                .FirstOrDefaultAsync(m => m.DepartmentID == id);
-            if (department == null)
+            var citizenDocument = await _context.CitizenDocument
+                .FirstOrDefaultAsync(m => m.CitizenDocumentID == id);
+            if (citizenDocument == null)
             {
                 return NotFound();
             }
 
-            return View(department);
+            return View(citizenDocument);
         }
 
-        // GET: Departments/Create
+        // GET: CitizenDocuments/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Departments/Create
+        // POST: CitizenDocuments/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("DepartmentID,DepartmentName,Description,IsActive")] Department department)
+        public async Task<IActionResult> Create([Bind("CitizenDocumentID,ApplicationID,DocumentID,DocumentType,FilePath,UploadedDate,VerificationStatus")] CitizenDocument citizenDocument)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(department);
+                _context.Add(citizenDocument);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(department);
+            return View(citizenDocument);
         }
 
-        // GET: Departments/Edit/5
+        // GET: CitizenDocuments/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace GovServe.Controllers
                 return NotFound();
             }
 
-            var department = await _context.Department.FindAsync(id);
-            if (department == null)
+            var citizenDocument = await _context.CitizenDocument.FindAsync(id);
+            if (citizenDocument == null)
             {
                 return NotFound();
             }
-            return View(department);
+            return View(citizenDocument);
         }
 
-        // POST: Departments/Edit/5
+        // POST: CitizenDocuments/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("DepartmentID,DepartmentName,Description,IsActive")] Department department)
+        public async Task<IActionResult> Edit(int id, [Bind("CitizenDocumentID,ApplicationID,DocumentID,DocumentType,FilePath,UploadedDate,VerificationStatus")] CitizenDocument citizenDocument)
         {
-            if (id != department.DepartmentID)
+            if (id != citizenDocument.CitizenDocumentID)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace GovServe.Controllers
             {
                 try
                 {
-                    _context.Update(department);
+                    _context.Update(citizenDocument);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!DepartmentExists(department.DepartmentID))
+                    if (!CitizenDocumentExists(citizenDocument.CitizenDocumentID))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace GovServe.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(department);
+            return View(citizenDocument);
         }
 
-        // GET: Departments/Delete/5
+        // GET: CitizenDocuments/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,34 +124,34 @@ namespace GovServe.Controllers
                 return NotFound();
             }
 
-            var department = await _context.Department
-                .FirstOrDefaultAsync(m => m.DepartmentID == id);
-            if (department == null)
+            var citizenDocument = await _context.CitizenDocument
+                .FirstOrDefaultAsync(m => m.CitizenDocumentID == id);
+            if (citizenDocument == null)
             {
                 return NotFound();
             }
 
-            return View(department);
+            return View(citizenDocument);
         }
 
-        // POST: Departments/Delete/5
+        // POST: CitizenDocuments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var department = await _context.Department.FindAsync(id);
-            if (department != null)
+            var citizenDocument = await _context.CitizenDocument.FindAsync(id);
+            if (citizenDocument != null)
             {
-                _context.Department.Remove(department);
+                _context.CitizenDocument.Remove(citizenDocument);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool DepartmentExists(int id)
+        private bool CitizenDocumentExists(int id)
         {
-            return _context.Department.Any(e => e.DepartmentID == id);
+            return _context.CitizenDocument.Any(e => e.CitizenDocumentID == id);
         }
     }
 }
