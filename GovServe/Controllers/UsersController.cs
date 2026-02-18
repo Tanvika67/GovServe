@@ -193,5 +193,30 @@ namespace GovServe.Controllers
         {
             return _context.User.Any(e => e.UserId == id);
         }
+
+        public async Task<IActionResult> CitizenDashboard()
+        {
+            var userId = HttpContext.Session.GetInt32("UserId");
+
+            var total = await _context.Applications
+                        .CountAsync(x => x.UserId == userId);
+
+            var approved = await _context.Applications
+                        .CountAsync(x => x.UserId == userId && x.Status == "Approved");
+
+            var rejected = await _context.Applications
+                        .CountAsync(x => x.UserId == userId && x.Status == "Rejected");
+
+            var pending = await _context.Applications
+                        .CountAsync(x => x.UserId == userId && x.Status == "Under Review");
+
+            ViewBag.Total = total;
+            ViewBag.Approved = approved;
+            ViewBag.Rejected = rejected;
+            ViewBag.Pending = pending;
+
+            return View();
+        }
+
     }
 }

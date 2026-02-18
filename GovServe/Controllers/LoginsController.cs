@@ -100,10 +100,10 @@ namespace GovServe.Controllers
 		     };
 				ViewBag.Roles = new SelectList(roles);
 				// Credentials Match → Dashboard Redirect
-				//return RedirectToAction("Dashboard", "User");
 				_context.Login.Add(login);
 				await _context.SaveChangesAsync();
-				return RedirectToAction("Index", "Logins");
+				//return RedirectToAction("Index", "Logins");
+				return RedirectToAction("CitizenDashboard", "User");
 
 			}
 
